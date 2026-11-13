@@ -77,7 +77,6 @@
             height: 195px;
             margin-left: 32px;
             background-color: #000;
-            /* Apontando para o arquivo .png do repositório */
             background-image: url('Super%20Mario%20Bros.%203%20(USA).png');
             background-size: 235% auto;
             background-position: 96% center;
@@ -167,6 +166,25 @@
             width: 100%; 
             height: 100%; 
         }
+
+        /* ESTILIZAÇÃO DO CONTROLE TOUCH DO EMULATORJS PARA O PADRÃO NES ORIGINAL */
+        #game-container .ej-touch-controller, 
+        #game-container .emulator-touch-controls {
+            background-color: rgba(126, 130, 135, 0.25) !important; /* Base translúcida com o cinza do NES */
+        }
+        /* D-Pad e botões com acabamento escuro/clássico */
+        #game-container button[class*="control"], 
+        #game-container .ej-pad-button {
+            background-color: #2b2b2b !important;
+            border: 2px solid #555 !important;
+        }
+        /* Cores clássicas para os botões de ação principal A / B */
+        #game-container .ej-btn-a, 
+        #game-container .ej-btn-b {
+            background-color: #cc2323 !important; /* Vermelho NES */
+            border-color: #901111 !important;
+            color: #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -176,7 +194,6 @@
     </header>
 
     <div id="game-card">
-        <!-- Moldura de Cartucho Clássico do NES -->
         <div class="nes-cartridge-wrapper">
             <div class="nes-cartridge">
                 <div class="nes-grip-lines"></div>
@@ -221,11 +238,9 @@
             window.EJS_player = '#game';
             window.EJS_core = 'nes';
             window.EJS_gameName = 'Super Mario Bros. 3';
-            window.EJS_color = '#e74c3c';
+            window.EJS_color = '#7e8287'; // Cor padrão do plástico cinza do console NES
             window.EJS_startOnLoaded = true;
             window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
-            
-            // Nome da ROM salva no repositório do GitHub
             window.EJS_gameUrl = 'Super%20Mario%20Bros.%203%20(USA).nes';
 
             var script = document.createElement('script');
