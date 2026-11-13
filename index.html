@@ -161,28 +161,49 @@
             display: none; 
             width: 100%; 
             height: 100vh; 
+            background: #000;
         }
         #game { 
             width: 100%; 
             height: 100%; 
         }
 
-        /* ESTILIZAÇÃO DO CONTROLE TOUCH DO EMULATORJS PARA O PADRÃO NES ORIGINAL */
-        #game-container .ej-touch-controller, 
-        #game-container .emulator-touch-controls {
-            background-color: rgba(126, 130, 135, 0.25) !important; /* Base translúcida com o cinza do NES */
+        /* ESTILO PERSONALIZADO DA TELA TOUCH: CONTROLE FIEL AO NES CLÁSSICO */
+        #game-container .ej-touch-controller,
+        #game-container div[class*="touch"] {
+            background: rgba(205, 208, 212, 0.15) !important;
         }
-        /* D-Pad e botões com acabamento escuro/clássico */
-        #game-container button[class*="control"], 
-        #game-container .ej-pad-button {
-            background-color: #2b2b2b !important;
-            border: 2px solid #555 !important;
+
+        /* Força o painel dos botões virtuais a parecer a placa frontal preta do controle do NES */
+        #game-container .ej-controller-container {
+            background-color: transparent !important;
         }
-        /* Cores clássicas para os botões de ação principal A / B */
-        #game-container .ej-btn-a, 
-        #game-container .ej-btn-b {
-            background-color: #cc2323 !important; /* Vermelho NES */
-            border-color: #901111 !important;
+
+        /* Botões A e B em formato circular vermelho autêntico */
+        #game-container button.ej-btn-a, 
+        #game-container button.ej-btn-b,
+        #game-container .ej-action-buttons button {
+            background-color: #d92626 !important;
+            border: 3px solid #7c1212 !important;
+            border-radius: 50% !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4) !important;
+            color: #fff !important;
+            font-weight: bold !important;
+        }
+
+        /* D-Pad Direcional com tom escuro e borda chanfrada */
+        #game-container .ej-dpad,
+        #game-container button[class*="dpad"] {
+            background-color: #1a1a1a !important;
+            border-color: #444 !important;
+        }
+
+        /* Botões Select e Start estilizados em pílulas cinzas */
+        #game-container button.ej-btn-select,
+        #game-container button.ej-btn-start {
+            background-color: #63666a !important;
+            border: 2px solid #3c3e40 !important;
+            border-radius: 10px !important;
             color: #fff !important;
         }
     </style>
@@ -238,7 +259,7 @@
             window.EJS_player = '#game';
             window.EJS_core = 'nes';
             window.EJS_gameName = 'Super Mario Bros. 3';
-            window.EJS_color = '#7e8287'; // Cor padrão do plástico cinza do console NES
+            window.EJS_color = '#d3d3d3'; // Cor cinza clássico da carcaça do NES
             window.EJS_startOnLoaded = true;
             window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
             window.EJS_gameUrl = 'Super%20Mario%20Bros.%203%20(USA).nes';
