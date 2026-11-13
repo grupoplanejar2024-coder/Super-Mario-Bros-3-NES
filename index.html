@@ -163,83 +163,28 @@
             height: 100vh; 
             background: #000;
             position: relative;
-            overflow: hidden;
         }
         #game { 
             width: 100%; 
             height: 100%; 
         }
 
-        /* --- MOLDURA DO CONTROLE DO NES (CORPO E PLACA PRETA) --- */
-        #game-container::before {
-            content: "";
-            position: fixed;
-            z-index: 5;
-            width: min(94vw, 560px);
-            height: 135px;
-            left: 50%;
-            bottom: 15px;
-            transform: translateX(-50%);
-            background: linear-gradient(145deg, #e3e3df, #b5b7b5);
-            border: 3px solid #777b7c;
-            border-radius: 9px;
-            box-shadow: 0 7px 15px rgba(0,0,0,0.8), inset 0 2px 3px rgba(255,255,255,0.8);
-            pointer-events: none;
+        /* --- ESTILIZAÇÃO DO CONTROLE VIRTUAL DO EMULATORJS --- */
+        /* Deixa o painel touch transparente para exibir a base cinza clássica */
+        #game-container .ej-touch-controller {
+            background: rgba(211, 211, 211, 0.25) !important;
+            z-index: 99 !important;
         }
 
-        #game-container::after {
-            content: "";
-            position: fixed;
-            z-index: 6;
-            width: min(calc(94vw - 16px), 544px);
-            height: 110px;
-            left: 50%;
-            bottom: 27px;
-            transform: translateX(-50%);
-            background: linear-gradient(145deg, #111111, #222222);
-            border: 2px solid #444;
-            border-radius: 4px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
-            pointer-events: none;
-        }
-
-        /* --- ESTILIZAÇÃO DOS BOTÕES NATIVOS DO EMULATORJS PARA O FORMATO CLÁSSICO --- */
-
-        /* Garantir que a camada de toque fique visível acima da carcaça */
-        #game-container .ej-touch-controller,
-        #game-container div[class*="touch"] {
-            z-index: 10 !important;
-        }
-
-        /* D-Pad (Direcional) */
-        #game-container .ej-dpad,
-        #game-container button[class*="dpad"] {
-            background-color: #1a1a1a !important;
-            border: 2px solid #555 !important;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.8));
-        }
-
-        /* Botões A e B (Vermelhos redondos clássicos) */
+        /* Estiliza os botões de ação (A e B) para ficarem vermelhos redondos */
+        #game-container .ej-action-buttons button,
+        #game-container button[class*="nes-btn-a"],
         #game-container button[class*="btn-a"],
-        #game-container button[class*="btn-b"],
-        #game-container .ej-action-buttons button {
+        #game-container button[class*="btn-b"] {
             background: linear-gradient(145deg, #ff4d4d, #cc1111) !important;
             border: 3px solid #800a0a !important;
             border-radius: 50% !important;
             color: #fff !important;
-            font-weight: bold !important;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), 0 3px 5px rgba(0,0,0,0.6) !important;
-        }
-
-        /* Botões Select e Start (Pílulas cinzas horizontais) */
-        #game-container button[class*="select"],
-        #game-container button[class*="start"] {
-            background: linear-gradient(145deg, #b0b0b0, #666666) !important;
-            border: 2px solid #333 !important;
-            border-radius: 7px !important;
-            color: #fff !important;
-            font-size: 8px !important;
-            font-weight: bold !important;
         }
     </style>
 </head>
@@ -298,6 +243,9 @@
             window.EJS_startOnLoaded = true;
             window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
             window.EJS_gameUrl = 'Super%20Mario%20Bros.%203%20(USA).nes';
+            
+            // Força a ativação e exibição dos controles táteis na tela
+            window.EJS_touch = true; 
 
             var script = document.createElement('script');
             script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
