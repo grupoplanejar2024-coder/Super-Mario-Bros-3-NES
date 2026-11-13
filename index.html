@@ -1,273 +1,389 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Super Mario Bros. 3 - Kubo Touch</title>
-    <style>
-        body, html { 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: #121212; 
-            color: #fff; 
-            font-family: Arial, sans-serif; 
-        }
-        header { 
-            text-align: center; 
-            padding: 15px; 
-            background: #1e1e1e; 
-        }
-        .badge { 
-            background: #e74c3c; 
-            color: #fff; 
-            padding: 4px 12px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            font-size: 14px; 
-        }
-        #game-card { 
-            max-width: 500px; 
-            margin: 20px auto; 
-            background: #1e1e1e; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
-        }
-        /* Estilo Visual de Cartucho do NES com a Arte da Capa */
-        .nes-cartridge-wrapper {
-            background: #181818;
-            padding: 25px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid #2b2b2b;
-        }
-        .nes-cartridge {
-            width: 220px;
-            height: 255px;
-            background: linear-gradient(145deg, #7e8287, #63666a);
-            border-radius: 8px 8px 4px 4px;
-            position: relative;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.75), inset 0 2px 3px rgba(255,255,255,0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 12px;
-        }
-        .nes-grip-lines {
-            width: 34px;
-            height: 100%;
-            position: absolute;
-            left: 14px;
-            top: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                #484a4d,
-                #484a4d 4px,
-                #75787d 4px,
-                #75787d 8px
-            );
-            border-left: 1px solid #3c3e40;
-            border-right: 1px solid #8c9096;
-        }
-        .nes-label {
-            width: 135px;
-            height: 195px;
-            margin-left: 32px;
-            background-color: #000;
-            background-image: url('Super%20Mario%20Bros.%203%20(USA).png');
-            background-size: 235% auto;
-            background-position: 96% center;
-            border-radius: 4px 4px 0 0;
-            border: 2px solid #2c2d30;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.8);
-            position: relative;
-            z-index: 2;
-        }
-        .nes-label::after {
-            content: "NINTENDO ENTERTAINMENT SYSTEM";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(180, 0, 0, 0.9);
-            color: #fff;
-            font-size: 6px;
-            font-weight: bold;
-            text-align: center;
-            padding: 2px 0;
-            letter-spacing: 0.5px;
-        }
-        .nes-arrow {
-            width: 0; 
-            height: 0; 
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 14px solid #4e5054;
-            margin-top: 12px;
-            margin-left: 32px;
-            filter: drop-shadow(0 1px 0 rgba(255,255,255,0.2));
-        }
-        .content { 
-            padding: 20px; 
-        }
-        h1 { 
-            margin: 0 0 10px 0; 
-            font-size: 24px; 
-            color: #e74c3c; 
-        }
-        .meta-info { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 15px; 
-            font-size: 13px; 
-            color: #aaa; 
-        }
-        .description { 
-            font-size: 14px; 
-            line-height: 1.5; 
-            color: #ddd; 
-            margin-bottom: 15px; 
-        }
-        .details { 
-            font-size: 13px; 
-            color: #bbb; 
-            margin-bottom: 20px; 
-        }
-        .details ul { 
-            padding-left: 20px; 
-            margin: 0; 
-        }
-        .btn-play { 
-            display: block; 
-            width: 100%; 
-            padding: 12px; 
-            background: #c0392b; 
-            color: #fff; 
-            border: none; 
-            border-radius: 6px; 
-            font-weight: bold; 
-            font-size: 16px; 
-            cursor: pointer; 
-            text-align: center; 
-            text-decoration: none; 
-        }
-        .btn-play:hover { 
-            background: #a93226; 
-        }
-        #game-container { 
-            display: none; 
-            width: 100%; 
-            height: 100vh; 
-            background: #000;
-        }
-        #game { 
-            width: 100%; 
-            height: 100%; 
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        /* ESTILO PERSONALIZADO DA TELA TOUCH: CONTROLE FIEL AO NES CLÁSSICO */
-        #game-container .ej-touch-controller,
-        #game-container div[class*="touch"] {
-            background: rgba(205, 208, 212, 0.15) !important;
-        }
+<title>Super Mario Bros. 3 - Kubo Touch</title>
 
-        /* Força o painel dos botões virtuais a parecer a placa frontal preta do controle do NES */
-        #game-container .ej-controller-container {
-            background-color: transparent !important;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        /* Botões A e B em formato circular vermelho autêntico */
-        #game-container button.ej-btn-a, 
-        #game-container button.ej-btn-b,
-        #game-container .ej-action-buttons button {
-            background-color: #d92626 !important;
-            border: 3px solid #7c1212 !important;
-            border-radius: 50% !important;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4) !important;
-            color: #fff !important;
-            font-weight: bold !important;
-        }
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+}
 
-        /* D-Pad Direcional com tom escuro e borda chanfrada */
-        #game-container .ej-dpad,
-        #game-container button[class*="dpad"] {
-            background-color: #1a1a1a !important;
-            border-color: #444 !important;
-        }
+header {
+    text-align: center;
+    padding: 16px;
+    background: #1e1e1e;
+}
 
-        /* Botões Select e Start estilizados em pílulas cinzas */
-        #game-container button.ej-btn-select,
-        #game-container button.ej-btn-start {
-            background-color: #63666a !important;
-            border: 2px solid #3c3e40 !important;
-            border-radius: 10px !important;
-            color: #fff !important;
-        }
-    </style>
+.badge {
+    background: #d92626;
+    color: white;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#game-card {
+    max-width: 500px;
+    margin: 20px auto;
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px #0008;
+}
+
+.nes-cartridge-wrapper {
+    background: #181818;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.nes-cartridge {
+    width: 220px;
+    height: 255px;
+    background: linear-gradient(145deg,#85898e,#55585d);
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 12px 24px #0009;
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+}
+
+.nes-grip-lines {
+    position: absolute;
+    left: 14px;
+    top: 0;
+    width: 34px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        #484a4d 0px,
+        #484a4d 4px,
+        #75787d 4px,
+        #75787d 8px
+    );
+}
+
+.nes-label {
+    width: 135px;
+    height: 195px;
+    margin-left: 32px;
+    background: #000;
+    background-image: url('Super%20Mario%20Bros.%203%20(USA).png');
+    background-size: 235% auto;
+    background-position: 96% center;
+    border: 2px solid #333;
+    position: relative;
+    z-index: 2;
+}
+
+.nes-label::after {
+    content: "NINTENDO ENTERTAINMENT SYSTEM";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #b40000;
+    font-size: 6px;
+    text-align: center;
+    padding: 3px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+}
+
+h1 {
+    color: #e74c3c;
+    font-size: 24px;
+}
+
+.meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #aaa;
+    font-size: 12px;
+}
+
+.description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+.btn-play {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 7px;
+    background: #c0392b;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-play:active {
+    transform: scale(.98);
+}
+
+/* TELA DO EMULADOR */
+
+#game-container {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background: #000;
+    overflow: hidden;
+    touch-action: none;
+}
+
+#game {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+/* CONTROLE NES - BOTÕES A E B */
+
+#nes-a,
+#nes-b {
+    background: linear-gradient(145deg,#ed3939,#b51219) !important;
+    border: 3px solid #781014 !important;
+    border-radius: 50% !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    box-shadow:
+        0 4px 7px #0009,
+        inset 0 2px 4px #ffffff66 !important;
+    text-shadow: 1px 1px 2px #500 !important;
+    min-width: 55px;
+    min-height: 55px;
+}
+
+/* SELECT E START */
+
+#nes-select,
+#nes-start {
+    background: linear-gradient(180deg,#999,#555) !important;
+    border: 2px solid #353535 !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    box-shadow: 0 3px 5px #0009 !important;
+}
+
+/* DIRECIONAL PRETO */
+
+#game-container .ej-dpad,
+#game-container button[class*="dpad"] {
+    background-color: #222 !important;
+    border-color: #777 !important;
+    color: white !important;
+    filter: drop-shadow(0 3px 4px #0009);
+}
+
+/* FUNDO DOS CONTROLES */
+
+#game-container .ej-controller-container {
+    background: transparent !important;
+}
+
+#game-container .ej-touch-controller {
+    touch-action: none;
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+    .content {
+        padding: 18px;
+    }
+
+    #game-container {
+        height: 100dvh;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <span class="badge">KUBO TOUCH</span>
-    </header>
+<header>
+    <span class="badge">KUBO TOUCH</span>
+</header>
 
-    <div id="game-card">
-        <div class="nes-cartridge-wrapper">
-            <div class="nes-cartridge">
-                <div class="nes-grip-lines"></div>
-                <div class="nes-label"></div>
-                <div class="nes-arrow"></div>
-            </div>
-        </div>
+<div id="game-card">
 
-        <div class="content">
-            <h1>Super Mario Bros. 3</h1>
-            
-            <div class="meta-info">
-                <span>🎮 1-2 Jogadores</span>
-                <span>📅 1988</span>
-                <span>🕹️ Nintendo (NES)</span>
-            </div>
-
-            <p class="description">
-                Voe pelos céus com a Super Folha e explore oito reinos repletos de segredos! Ajude Mario e Luigi a derrotar os Koopalings e resgatar os reis transformados neste clássico definitivo do NES.
-            </p>
-
-            <div class="details">
-                <ul>
-                    <li><strong>🕹️ Gênero:</strong> Plataforma</li>
-                    <li><strong>🎮 Console:</strong> Nintendo Entertainment System (NES)</li>
-                </ul>
-            </div>
-
-            <button class="btn-play" onclick="startEmulator()">JOGAR AGORA</button>
+    <div class="nes-cartridge-wrapper">
+        <div class="nes-cartridge">
+            <div class="nes-grip-lines"></div>
+            <div class="nes-label"></div>
         </div>
     </div>
 
-    <div id="game-container">
-        <div id="game"></div>
+    <div class="content">
+
+        <h1>Super Mario Bros. 3</h1>
+
+        <div class="meta-info">
+            <span>🎮 1-2 Jogadores</span>
+            <span>📅 1988</span>
+            <span>🕹️ Nintendo NES</span>
+        </div>
+
+        <p class="description">
+            Voe pelos céus com a Super Folha e explore
+            oito reinos repletos de segredos!
+            Ajude Mario e Luigi nesta grande aventura.
+        </p>
+
+        <button class="btn-play" onclick="startEmulator()">
+            🎮 JOGAR AGORA
+        </button>
+
     </div>
+</div>
 
-    <script type="text/javascript">
-        function startEmulator() {
-            document.getElementById('game-card').style.display = 'none';
-            document.getElementById('game-container').style.display = 'block';
+<div id="game-container">
+    <div id="game"></div>
+</div>
 
-            window.EJS_player = '#game';
-            window.EJS_core = 'nes';
-            window.EJS_gameName = 'Super Mario Bros. 3';
-            window.EJS_color = '#d3d3d3'; // Cor cinza clássico da carcaça do NES
-            window.EJS_startOnLoaded = true;
-            window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
-            window.EJS_gameUrl = 'Super%20Mario%20Bros.%203%20(USA).nes';
+<script>
 
-            var script = document.createElement('script');
-            script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
-            document.body.appendChild(script);
+function startEmulator() {
+
+    document.getElementById('game-card').style.display = 'none';
+
+    document.getElementById('game-container').style.display = 'block';
+
+    // CONFIGURAÇÕES DO EMULATORJS
+
+    window.EJS_player = '#game';
+    window.EJS_core = 'nes';
+    window.EJS_gameName = 'Super Mario Bros. 3';
+    window.EJS_color = '#85898e';
+
+    window.EJS_startOnLoaded = true;
+
+    window.EJS_pathtodata =
+        'https://cdn.emulatorjs.org/stable/data/';
+
+    // ESQUEMA DE CONTROLE NES
+
+    window.EJS_controlScheme = 'nes';
+
+    // CONTROLE VIRTUAL PERSONALIZADO
+
+    window.EJS_VirtualGamepadSettings = [
+
+        // DIRECIONAL
+        {
+            type: 'dpad',
+            location: 'left',
+            left: '50%',
+            right: '50%',
+            joystickInput: false,
+            inputValues: [4, 5, 6, 7]
+        },
+
+        // BOTÃO B
+        {
+            type: 'button',
+            text: 'B',
+            id: 'nes-b',
+            location: 'right',
+            left: 0,
+            top: 35,
+            bold: true,
+            fontSize: 24,
+            input_value: 8
+        },
+
+        // BOTÃO A
+        {
+            type: 'button',
+            text: 'A',
+            id: 'nes-a',
+            location: 'right',
+            left: 75,
+            top: 35,
+            bold: true,
+            fontSize: 24,
+            input_value: 0
+        },
+
+        // SELECT
+        {
+            type: 'button',
+            text: 'SELECT',
+            id: 'nes-select',
+            location: 'center',
+            left: -45,
+            top: 0,
+            fontSize: 11,
+            block: true,
+            input_value: 2
+        },
+
+        // START
+        {
+            type: 'button',
+            text: 'START',
+            id: 'nes-start',
+            location: 'center',
+            left: 35,
+            top: 0,
+            fontSize: 11,
+            block: true,
+            input_value: 3
         }
-    </script>
+
+    ];
+
+    // ARQUIVO DO JOGO
+    window.EJS_gameUrl =
+        './Super%20Mario%20Bros.%203%20(USA).nes';
+
+    // CARREGAR EMULADOR
+
+    const script = document.createElement('script');
+
+    script.src =
+        'https://cdn.emulatorjs.org/stable/data/loader.js';
+
+    script.onerror = function() {
+        alert('Não foi possível carregar o EmulatorJS. Verifique sua conexão.');
+    };
+
+    document.body.appendChild(script);
+}
+
+</script>
+
 </body>
 </html>
